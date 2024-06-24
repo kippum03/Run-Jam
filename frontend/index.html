@@ -1,18 +1,47 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Poke Jam</title>
+    <title>Pokémon-Themed Playlist Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .playlist {
+            margin-bottom: 20px;
+        }
+        .playlist img {
+            width: 100px;
+            height: 100px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome to Poke Jam</h1>
+    <h1>Welcome to the Pokémon-Themed Playlist Generator</h1>
     <div id="content"></div>
 
     <script>
         async function fetchPlaylists() {
             const response = await fetch('/playlists');
             const data = await response.json();
-            document.getElementById('content').innerHTML = JSON.stringify(data);
+            displayPlaylists(data.items);
         }
+
+        function displayPlaylists(playlists) {
+            const content = document.getElementById('content');
+            playlists.forEach(playlist => {
+                const playlistDiv = document.createElement('div');
+                playlistDiv.classList.add('playlist');
+                playlistDiv.innerHTML = `
+                    <h2>${playlist.name}</h2>
+                    <a href="${playlist.external_urls.spotify}" target="_blank">
+                        <img src="${playlist.images[0].url}" alt="${playlist.name}">
+                    </a>
+                    <p>Tracks: ${playlist.tracks.total}</p>
+                `;
+                content.appendChild(playlistDiv);
+            });
+        }
+
         fetchPlaylists();
     </script>
 </body>

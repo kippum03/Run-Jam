@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Poke Jam</title>
+</head>
+<body>
+    <h1>Welcome to Poke Jam</h1>
+    <div id="content"></div>
+
+    <script>
+        async function fetchPlaylists() {
+            const response = await fetch('/playlists');
+            const data = await response.json();
+            document.getElementById('content').innerHTML = JSON.stringify(data);
+        }
+        fetchPlaylists();
+    </script>
+</body>
+</html>
